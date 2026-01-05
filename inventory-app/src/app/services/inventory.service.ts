@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { InventoryItem } from '../models/inventory-item.model';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
     providedIn: 'root'
 })
 export class InventoryService {
-    private apiUrl = 'http://localhost:8000'; // FastAPI Backend URL
+    private apiUrl = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
