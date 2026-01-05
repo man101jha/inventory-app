@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="header-actions">
+        <h1>Inventory Management</h1>
+        <a routerLink="/inventory/add" class="btn btn-primary">
+            <span class="icon">+</span> Add New Item
+        </a>
+    </div>
+
+    <div class="inventory-card">
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">Qty</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items$ | async">
+                    <td class="id-col">#{{item.id}}</td>
+                    <td class="name-col">
+                        <div class="product-name">{{item.name}}</div>
+                        <div class="product-desc">{{item.description}}</div>
+                    </td>
+                    <td><span class="badge category-badge">{{item.category}}</span></td>
+                    <td>
+                        <span class="status-indicator" [ngClass]="getStatusClass(item.status)">
+                            <span class="dot"></span> {{item.status}}
+                        </span>
+                    </td>
+                    <td class="text-right price-col">${{item.price | number:'1.2-2'}}</td>
+                    <td class="text-right qty-col">{{item.quantity}}</td>
+                    <td class="actions-col">
+                        <a [routerLink]="['/inventory/edit', item.id]" class="btn-icon edit" title="Edit">
+                            Edit
+                        </a>
+                        <button (click)="deleteItem(item.id)" class="btn-icon delete" title="Delete">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="(items$ | async)?.length === 0" class="empty-state">
+            <p>No inventory items found.</p>
+        </div>
+    </div>
+</div>
